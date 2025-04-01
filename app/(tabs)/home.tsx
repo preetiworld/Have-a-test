@@ -72,6 +72,7 @@ const Home = () => {
 
   return (
     <View style={styles.container00}>
+      <StatusBar barStyle="light-content" backgroundColor="#d47522" />
       <ScrollView>
         <View style={styles.container01}>
           <View style={styles.container02}>
