@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   StyleSheet,
+  StatusBar,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
@@ -40,6 +41,7 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#d47522" />
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
