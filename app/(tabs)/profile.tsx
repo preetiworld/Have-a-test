@@ -4,7 +4,11 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
+
+import { database } from "../firebaseConfig";
+import { ref, set } from "firebase/database";
 import React, { useState } from "react";
 
 const Profile = () => {
@@ -12,6 +16,32 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+
+  const handleSubmitForm = async () => {
+    if (!username || !password || !email || !phone) {
+      Alert.alert("Error", "Please fill all the details");
+      return;
+    }
+
+    try {
+      const newContactRef = ref(database, "contacts/" + Date.now());
+      await set(newContactRef, {
+        username,
+        password,
+        email,
+        phone,
+      });
+
+      Alert.alert("Success!", " your profile successfully created");
+      setUsername("");
+      setPassword("");
+      setEmail("");
+      setPhone("");
+    } catch (error) {
+      console.error("Error storing data", error);
+      Alert.alert("Error!", "Error storing data");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -50,7 +80,7 @@ const Profile = () => {
             keyboardType="phone-pad"
           />
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleSubmitForm}>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableOpacity>
         </View>
@@ -96,3 +126,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
